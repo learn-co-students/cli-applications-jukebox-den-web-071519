@@ -40,16 +40,13 @@ end
 def play(songs)
   puts "Please enter a song name or number:"
   user_response = gets.chomp
-  songs.each_with_index do |song, index|
-    song_number = index + 1
-    if user_response == song
-      puts "Playing #{song}"
-    elsif user_response == "#{index + 1}"
-      puts "Playing #{songs[index]}"
+    if songs.include?(user_response)
+      puts "Playing #{user_response}"
+    elsif user_response.to_i <= songs.length && user_response.to_i > 0
+      puts "Playing #{songs[user_response.to_i - 1]}"
     else 
       puts "Invalid input, please try again"
     end 
-  end
 end 
 
 def exit_jukebox 
@@ -62,17 +59,24 @@ def run(songs)
   help 
   puts "Please enter a command:"
   user_says = gets.strip 
-    if user_says == "help"
+  loop do 
+  case user_says
+    when "help"
       help
-    elsif user_says == "list"
+      puts "Please enter a command:"
+      user_says = gets.strip
+    when "list"
       list(songs)
-    elsif user_says == "play"
+      puts "Please enter a command:"
+      user_says = gets.strip
+    when "play"
       play(songs)
-    elsif user_says == "exit"
+      puts "Please enter a command:"
+      user_says = gets.strip
+    when "exit"
+      break
     end
+  end
   exit_jukebox
 end
-
-
-
 
